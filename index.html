@@ -28,6 +28,7 @@
     .hearts{
       position:fixed; inset:0; pointer-events:none; overflow:hidden;
       opacity:.95;
+      z-index:0;
     }
     .heart{
       position:absolute;
@@ -51,6 +52,7 @@
       border: 1px solid rgba(255,255,255,.18);
       backdrop-filter: blur(10px);
       position:relative;
+      z-index:1; /* keep card above hearts */
     }
     .top{
       display:flex; align-items:center; gap:12px;
@@ -188,7 +190,7 @@
 
     .footer{
       margin-top:14px;
-      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap;
       font-size:12px; opacity:.75;
     }
     a{ color:#fff; }
@@ -210,17 +212,12 @@
       <!-- Intro panel -->
       <div class="panel active" id="panelIntro">
         <div class="center">
-          <h2 class="big">Hey love ❤️</h2>
-          <p class="sub" id="introText">
-            I made this just for you. I’m really grateful for you, and I wanted to ask you something in a cute way.
-          </p>
+          <h2 class="big">Hey my love ❤️</h2>
+          <p class="sub" id="introText"></p>
 
           <div class="btnrow">
             <button class="yes" id="btnContinue">Continue ➜</button>
-            <button class="ghost" id="btnSkip">Skip</button>
           </div>
-
-          <div class="hint">Tip: turn your volume on for extra vibes (optional 😄)</div>
         </div>
       </div>
 
@@ -228,9 +225,7 @@
       <div class="panel" id="panelAsk">
         <div class="center">
           <h2 class="big">Wanna be my Valentine? 💌</h2>
-          <p class="sub" id="askSub">
-            No pressure… but also yes pressure 😭💕
-          </p>
+          <p class="sub" id="askSub"></p>
 
           <div class="btnrow">
             <button class="yes" id="btnYes">YES 😳💖</button>
@@ -252,13 +247,7 @@
 
           <div class="loveNote">
             <h2 id="loveTitle">My message for you ❤️</h2>
-            <p id="loveBody">
-              You make my days better in ways you don’t even realize. I love the way you exist,
-              the way you care, and the way you make everything feel lighter.
-              I’m proud of you, I’m grateful for you, and I choose you—today and always.
-              <br><br>
-              Happy Valentine’s Day, my love. 🥺💘
-            </p>
+            <p id="loveBody"></p>
             <div class="sig" id="sigLine">— from your bf ❤️</div>
           </div>
 
@@ -270,15 +259,14 @@
     </section>
 
     <div class="footer">
-      <span>Made with love.</span>
       <span>Press <b>R</b> to replay.</span>
     </div>
   </main>
 
   <script>
     // ====== EASY CUSTOMIZE (edit these) ======
-    const GF_NAME = ""; // e.g. "Aanya"
-    const INTRO_LINE = "I made this just for you. I’m really grateful for you, and I wanted to ask you something in a cute way.";
+    const GF_NAME = ""; // optional
+    const INTRO_LINE = "I have lwky been programming this for a month and I hope you like this. I know we are long distance but I don't wanna let that stop us from putting effort into each other. I hope you enjoy!";
     const ASK_SUB = "No pressure… but also yes pressure 😭💕";
     const YES_TITLE = "My message for you ❤️";
     const YES_BODY = `
@@ -303,7 +291,6 @@ Happy Valentine’s Day, my love. 🥺💘
     const tinyLine = document.getElementById("tinyLine");
 
     const btnContinue = document.getElementById("btnContinue");
-    const btnSkip = document.getElementById("btnSkip");
     const btnYes = document.getElementById("btnYes");
     const btnNo = document.getElementById("btnNo");
     const btnReplay = document.getElementById("btnReplay");
@@ -331,9 +318,8 @@ Happy Valentine’s Day, my love. 🥺💘
 
     // ====== intro -> ask ======
     btnContinue.addEventListener("click", () => show(panelAsk));
-    btnSkip.addEventListener("click", () => show(panelAsk));
 
-    // ====== hearts generator ======
+    // ====== hearts generator (runs in background all the time) ======
     const heartChars = ["💖","💘","💝","💗","💓","💕","❤️","🫶"];
     let heartTimer = null;
 
@@ -353,21 +339,16 @@ Happy Valentine’s Day, my love. 🥺💘
     }
 
     function startHearts(){
-      stopHearts();
-      // burst
-      for(let i=0;i<18;i++) setTimeout(spawnHeart, i*60);
-      heartTimer = setInterval(spawnHeart, 140);
-    }
-    function stopHearts(){
-      if (heartTimer) clearInterval(heartTimer);
-      heartTimer = null;
-      hearts.innerHTML = "";
+      if (heartTimer) return; // already running
+      for(let i=0;i<12;i++) setTimeout(spawnHeart, i*80);
+      heartTimer = setInterval(spawnHeart, 180);
     }
 
-    // ====== Yes -> show big message + hearts ======
+    startHearts();
+
+    // ====== Yes -> show big message ======
     btnYes.addEventListener("click", () => {
       show(panelYes);
-      startHearts();
     });
 
     // ====== No button run away + "you sure?" cycling ======
@@ -403,7 +384,6 @@ Happy Valentine’s Day, my love. 🥺💘
       noCount++;
     }
 
-    // Make it hard to click: on hover, move. On click, move + change text.
     btnNo.addEventListener("mouseenter", () => {
       moveNoButton();
       updateNoHint();
@@ -416,10 +396,8 @@ Happy Valentine’s Day, my love. 🥺💘
 
     // ====== replay ======
     function replay(){
-      stopHearts();
       noCount = 0;
       noHint.textContent = "Try clicking “No” if you dare.";
-      // reset no button position
       btnNo.style.left = "58%";
       btnNo.style.top = "54%";
       btnNo.style.transform = "translate(-50%, -50%)";
@@ -427,7 +405,6 @@ Happy Valentine’s Day, my love. 🥺💘
     }
     btnReplay.addEventListener("click", replay);
 
-    // hotkey
     window.addEventListener("keydown", (e) => {
       if (e.key.toLowerCase() === "r") replay();
     });

@@ -52,7 +52,7 @@
       border: 1px solid rgba(255,255,255,.18);
       backdrop-filter: blur(10px);
       position:relative;
-      z-index:1; /* keep card above hearts */
+      z-index:1;
     }
     .top{
       display:flex; align-items:center; gap:12px;
@@ -66,7 +66,8 @@
       font-size:22px;
     }
     h1{
-      margin:0; font-size:22px; letter-spacing:.2px;
+      margin:0; font-size:20px; letter-spacing:.2px;
+      text-transform:uppercase;
     }
     p{
       margin:12px 0 0; line-height:1.45; color:var(--muted);
@@ -187,13 +188,6 @@
       from{ transform: translateY(8px) scale(.98); opacity:0; }
       to{ transform: translateY(0) scale(1); opacity:1; }
     }
-
-    .footer{
-      margin-top:14px;
-      display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap;
-      font-size:12px; opacity:.75;
-    }
-    a{ color:#fff; }
   </style>
 </head>
 <body>
@@ -203,8 +197,8 @@
     <div class="top">
       <div class="badge">💘</div>
       <div>
-        <h1>Valentine’s Day</h1>
-        <p id="tinyLine">Open me with love.</p>
+        <h1>HAPPY VALENTINES DAY MY POOK</h1>
+        <p id="tinyLine">only for Dana 🤫</p>
       </div>
     </div>
 
@@ -212,7 +206,7 @@
       <!-- Intro panel -->
       <div class="panel active" id="panelIntro">
         <div class="center">
-          <h2 class="big">Hey my love ❤️</h2>
+          <h2 class="big">Hi my love ❤️</h2>
           <p class="sub" id="introText"></p>
 
           <div class="btnrow">
@@ -257,16 +251,11 @@
         </div>
       </div>
     </section>
-
-    <div class="footer">
-      <span>Press <b>R</b> to replay.</span>
-    </div>
   </main>
 
   <script>
     // ====== EASY CUSTOMIZE (edit these) ======
-    const GF_NAME = ""; // optional
-    const INTRO_LINE = "I have lwky been programming this for a month and I hope you like this. I know we are long distance but I don't wanna let that stop us from putting effort into each other. I hope you enjoy!";
+    const INTRO_LINE = "I have lwky been programming this for a month and I hope you like this. I know we are long distance but I don't wanna let that stop us from putting effort into each other. I hope its not too cringe!!!!";
     const ASK_SUB = "No pressure… but also yes pressure 😭💕";
     const YES_TITLE = "My message for you ❤️";
     const YES_BODY = `
@@ -288,7 +277,6 @@ Happy Valentine’s Day, my love. 🥺💘
     const loveTitle = document.getElementById("loveTitle");
     const loveBody = document.getElementById("loveBody");
     const sigLine = document.getElementById("sigLine");
-    const tinyLine = document.getElementById("tinyLine");
 
     const btnContinue = document.getElementById("btnContinue");
     const btnYes = document.getElementById("btnYes");
@@ -300,10 +288,6 @@ Happy Valentine’s Day, my love. 🥺💘
     const hearts = document.getElementById("hearts");
 
     // ====== init copy ======
-    if (GF_NAME && GF_NAME.trim().length){
-      document.querySelector("#panelIntro .big").textContent = `Hey ${GF_NAME} ❤️`;
-      tinyLine.textContent = `For ${GF_NAME}.`;
-    }
     introText.textContent = INTRO_LINE;
     askSub.textContent = ASK_SUB;
     loveTitle.textContent = YES_TITLE;
@@ -339,11 +323,10 @@ Happy Valentine’s Day, my love. 🥺💘
     }
 
     function startHearts(){
-      if (heartTimer) return; // already running
+      if (heartTimer) return;
       for(let i=0;i<12;i++) setTimeout(spawnHeart, i*80);
       heartTimer = setInterval(spawnHeart, 180);
     }
-
     startHearts();
 
     // ====== Yes -> show big message ======
@@ -394,7 +377,7 @@ Happy Valentine’s Day, my love. 🥺💘
       updateNoHint();
     });
 
-    // ====== replay ======
+    // ====== replay (button only) ======
     function replay(){
       noCount = 0;
       noHint.textContent = "Try clicking “No” if you dare.";
@@ -404,10 +387,6 @@ Happy Valentine’s Day, my love. 🥺💘
       show(panelIntro);
     }
     btnReplay.addEventListener("click", replay);
-
-    window.addEventListener("keydown", (e) => {
-      if (e.key.toLowerCase() === "r") replay();
-    });
   </script>
 </body>
 </html>

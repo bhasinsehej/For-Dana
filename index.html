@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>💘 Valentine?</title>
-  
+
 <style>
 :root{
   --bg1:#120015; --bg2:#2a001f;
@@ -135,7 +135,6 @@ h1{
   transition: opacity .5s ease, transform .5s ease;
   pointer-events:none;
 
-  /* allows tall content to not get squished */
   overflow:auto;
   padding: 10px 0;
 }
@@ -158,10 +157,10 @@ h1{
 #panelAsk .big{ font-size:34px; margin:0 0 10px; }
 #panelAsk .sub{ font-size:18px; line-height:1.55; max-width:680px; }
 
-/* yes: reduced so signature fits */
+/* yes */
 #panelYes .big{
-  font-size:34px;     /* smaller so bottom signature shows */
-  margin:0 0 6px;     /* tighter spacing */
+  font-size:34px;
+  margin:0 0 6px;
 }
 
 /* buttons */
@@ -200,13 +199,15 @@ button:active{ transform: scale(.98); }
   opacity:.95;
 }
 
-/* love note */
+/* love note (FIXED: missing selector) */
+.loveNote{
   text-align:left;
   padding:18px;
   border-radius:20px;
   background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.18);
-  margin-top:8px;
+  margin: 8px auto 0;
+  width: min(700px, 100%);
   max-height:46vh;
   overflow:auto;
   padding-bottom:26px;
@@ -240,7 +241,6 @@ button:active{ transform: scale(.98); }
 </style>
 </head>
 
-  
 <body>
 <div class="hearts" id="hearts"></div>
 
@@ -251,7 +251,6 @@ button:active{ transform: scale(.98); }
     <div id="tinyLine">only for Dana 🤫</div>
 
     <div class="melodyWrap">
-      <!-- Put mymelody.png in the SAME repo folder as index.html -->
       <img class="melodyImg" src="./mymelody.png" alt="My Melody">
       <div class="melodyCap">my melody</div>
     </div>
@@ -294,13 +293,13 @@ button:active{ transform: scale(.98); }
         <h2 class="big">YAYYYYYYY!!! 💞💞💞</h2>
         <p class="sub">Okay now you’re officially mine forever 😜</p>
 
-<div class="loveNote">
-  <p id="loveBody"></p>
+        <div class="loveNote">
+          <p id="loveBody"></p>
+          <div class="closingRow">
+            <span class="sig">— from your ugly bugly, Sehej ♥️</span>
+          </div>
+        </div>
 
-  <div class="closingRow">
-    <span class="sig">— from your ugly bugly, Sehej ♥️</span>
-  </div>
-</div>
       </div>
     </div>
 

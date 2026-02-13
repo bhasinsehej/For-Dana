@@ -1,414 +1,267 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>💘 Valentine?</title>
-  <style>
-    :root{
-      --bg1:#120015; --bg2:#2a001f;
-      --card:#ffffff10; --card2:#ffffff18;
-      --text:#fff; --muted:#ffd6e7;
-      --yes:#2ee59d; --yes2:#1ccf8b;
-      --no:#ff5b7a; --no2:#ff3d63;
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0; min-height:100vh; display:grid; place-items:center;
-      color:var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      background: radial-gradient(1200px 800px at 20% 10%, #5c003f 0%, transparent 55%),
-                  radial-gradient(1000px 700px at 80% 90%, #3b005c 0%, transparent 55%),
-                  linear-gradient(135deg, var(--bg1), var(--bg2));
-      overflow:hidden;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>💘 Valentine?</title>
 
-    /* floating hearts background */
-    .hearts{
-      position:fixed; inset:0; pointer-events:none; overflow:hidden;
-      opacity:.95;
-      z-index:0;
-    }
-    .heart{
-      position:absolute;
-      font-size:22px;
-      filter: drop-shadow(0 10px 20px rgba(0,0,0,.35));
-      animation: floatUp linear forwards;
-      user-select:none;
-    }
-    @keyframes floatUp{
-      from{ transform: translateY(20px) scale(.8) rotate(0deg); opacity:0; }
-      10%{opacity:1}
-      to{ transform: translateY(-120vh) scale(1.3) rotate(25deg); opacity:0; }
-    }
+<style>
+:root{
+  --bg1:#120015; --bg2:#2a001f;
+  --card:#ffffff10; --card2:#ffffff18;
+  --text:#fff; --muted:#ffd6e7;
+  --yes:#2ee59d; --yes2:#1ccf8b;
+  --no:#ff5b7a; --no2:#ff3d63;
+  --shadow: 0 18px 60px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; display:grid; place-items:center;
+  color:var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  background:
+    radial-gradient(1200px 800px at 20% 10%, #5c003f 0%, transparent 55%),
+    radial-gradient(1000px 700px at 80% 90%, #3b005c 0%, transparent 55%),
+    linear-gradient(135deg, var(--bg1), var(--bg2));
+  overflow:hidden;
+}
 
-    /* ✅ Make main card always fit on screen */
-    .card{
-      width:min(780px, 94vw);           /* a bit wider so the note fits */
-      max-height:92vh;                  /* key: never exceed viewport height */
-      overflow:auto;                    /* allows scrolling if ever needed */
-      padding:22px 22px;
-      border-radius:24px;
-      background: linear-gradient(180deg, var(--card2), var(--card));
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255,255,255,.18);
-      backdrop-filter: blur(10px);
-      position:relative;
-      z-index:1;
-    }
+/* floating hearts */
+.hearts{
+  position:fixed; inset:0; pointer-events:none; overflow:hidden;
+  opacity:.95; z-index:0;
+}
+.heart{
+  position:absolute;
+  font-size:22px;
+  animation: floatUp linear forwards;
+}
+@keyframes floatUp{
+  from{ transform: translateY(20px) scale(.8); opacity:0; }
+  10%{opacity:1}
+  to{ transform: translateY(-120vh) scale(1.3); opacity:0; }
+}
 
-    /* ✅ Center the top header for ALL pages */
-    .top{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      margin-bottom:10px;
-      text-align:center;
-      flex-direction:column;            /* stack badge + text */
-    }
-    .badge{
-      width:44px; height:44px; border-radius:14px;
-      display:grid; place-items:center;
-      background: #ff3d631f;
-      border: 1px solid rgba(255,255,255,.18);
-      font-size:22px;
-    }
-    h1{
-      margin:0;
-      font-size:18px;
-      letter-spacing:.6px;
-      text-transform:uppercase;
-      line-height:1.1;
-    }
-    p{
-      margin:8px 0 0; line-height:1.45; color:var(--muted);
-      font-size:16px;
-    }
-    #tinyLine{
-      margin-top:4px;
-      font-size:14px;
-      opacity:.95;
-    }
+/* card */
+.card{
+  width:min(780px, 94vw);
+  max-height:92vh;
+  overflow:auto;
+  padding:24px;
+  border-radius:24px;
+  background: linear-gradient(180deg, var(--card2), var(--card));
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255,255,255,.18);
+  backdrop-filter: blur(10px);
+  z-index:1;
+}
 
-    /* stage/panels */
-    .stage{
-      margin-top:8px;
-      min-height: 420px;                /* more room so yes page fits better */
-      position:relative;
-    }
-    .panel{
-      position:absolute; inset:0;
-      display:grid;
-      place-items:center;
-      opacity:0; transform: translateY(10px);
-      transition: opacity .5s ease, transform .5s ease;
-      pointer-events:none;
-    }
-    .panel.active{
-      opacity:1; transform: translateY(0);
-      pointer-events:auto;
-    }
-    .center{
-      text-align:center;
-      padding:8px 6px;
-      width:100%;
-      max-width: 720px;
-      margin: 0 auto;
-    }
+/* centered header */
+.top{
+  text-align:center;
+  margin-bottom:10px;
+}
+.badge{
+  width:44px; height:44px;
+  display:grid; place-items:center;
+  margin:0 auto 6px auto;
+  border-radius:14px;
+  background:#ff3d631f;
+  border:1px solid rgba(255,255,255,.18);
+  font-size:22px;
+}
+h1{
+  margin:0;
+  font-size:18px;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+}
+#tinyLine{
+  margin-top:4px;
+  font-size:14px;
+  opacity:.9;
+}
 
-    .big{
-      font-size:30px;
-      margin:0 0 8px;
-    }
-    .sub{
-      margin:0 auto;
-      max-width: 62ch;
-      color: var(--muted);
-    }
+/* panels */
+.stage{ position:relative; min-height:420px; }
+.panel{
+  position:absolute; inset:0;
+  display:grid; place-items:center;
+  opacity:0; transform:translateY(10px);
+  transition:.4s ease;
+  pointer-events:none;
+}
+.panel.active{
+  opacity:1; transform:none;
+  pointer-events:auto;
+}
 
-    .btnrow{
-      display:flex; justify-content:center; gap:14px;
-      margin-top:16px;
-      flex-wrap:wrap;
-    }
-    button{
-      border:0; cursor:pointer;
-      padding:12px 18px;
-      border-radius:14px;
-      font-weight:700;
-      font-size:16px;
-      box-shadow: 0 16px 40px rgba(0,0,0,.35);
-      transition: transform .12s ease, filter .2s ease;
-      position:relative;
-    }
-    button:active{ transform: scale(.98); }
-    .yes{
-      background: linear-gradient(180deg, var(--yes), var(--yes2));
-      color:#072318;
-    }
-    .no{
-      background: linear-gradient(180deg, var(--no), var(--no2));
-      color:#2a000b;
-    }
-    .ghost{
-      background: transparent;
-      border: 1px solid rgba(255,255,255,.28);
-      color: #fff;
-      box-shadow:none;
-    }
-    .hint{
-      font-size:13px; opacity:.9; margin-top:10px;
-      color: rgba(255,255,255,.8);
-    }
+.center{
+  text-align:center;
+  width:100%;
+  max-width:720px;
+  margin:0 auto;
+}
 
-    /* No button “run away” area */
-    .arena{
-      position:relative;
-      width:100%;
-      max-width:560px;
-      height:130px;
-      margin:14px auto 0;
-      border-radius:18px;
-      border: 1px dashed rgba(255,255,255,.18);
-      background: rgba(255,255,255,.06);
-      overflow:hidden;
-    }
-    .noMover{
-      position:absolute;
-      left: 58%;
-      top: 54%;
-      transform: translate(-50%, -50%);
-    }
+.big{ font-size:30px; margin-bottom:10px; }
+.sub{ max-width:60ch; margin:0 auto; color:var(--muted); }
 
-    /* ✅ YES screen: note becomes scrollable so nothing goes off-screen */
-    .loveNote{
-      text-align:left;
-      padding:16px 16px;
-      border-radius:18px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.18);
-      margin:14px auto 0;
-      width:100%;
-      max-width: 720px;
+/* 🔥 Bigger fonts ONLY for Intro + Ask */
+.scaleIntro .big{ font-size:42px; }
+.scaleIntro .sub{ font-size:19px; }
 
-      max-height: 44vh;                 /* key: constrain height */
-      overflow:auto;                    /* scroll inside the note */
-    }
-    .loveNote h2{
-      margin:0 0 8px; font-size:18px;
-    }
-    .loveNote p{
-      margin:0;
-      color:#ffe6f0;
-      line-height:1.55;
-      font-size:15px;
-    }
-    .sig{
-      margin-top:10px;
-      opacity:.9;
-      font-weight:700;
-    }
+.scaleAsk .big{ font-size:42px; }
+.scaleAsk .sub{ font-size:19px; }
+.scaleAsk button{ font-size:18px; padding:14px 22px; }
 
-    .fadeIn{ animation: pop .55s ease both; }
-    @keyframes pop{
-      from{ transform: translateY(8px) scale(.98); opacity:0; }
-      to{ transform: translateY(0) scale(1); opacity:1; }
-    }
-  </style>
+/* buttons */
+.btnrow{ margin-top:16px; display:flex; justify-content:center; gap:14px; }
+button{
+  border:0; cursor:pointer;
+  padding:12px 18px;
+  border-radius:14px;
+  font-weight:700;
+  font-size:16px;
+}
+.yes{
+  background: linear-gradient(180deg, var(--yes), var(--yes2));
+  color:#072318;
+}
+.no{
+  background: linear-gradient(180deg, var(--no), var(--no2));
+  color:#2a000b;
+}
+.ghost{
+  background:transparent;
+  border:1px solid rgba(255,255,255,.3);
+  color:#fff;
+}
+
+/* no arena */
+.arena{
+  margin:14px auto 0;
+  width:100%; max-width:560px;
+  height:130px;
+  border-radius:18px;
+  border:1px dashed rgba(255,255,255,.2);
+  background:rgba(255,255,255,.06);
+  position:relative;
+}
+.noMover{
+  position:absolute;
+  left:58%; top:54%;
+  transform:translate(-50%, -50%);
+}
+
+/* YES page note */
+.loveNote{
+  text-align:left;
+  padding:16px;
+  border-radius:18px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);
+  margin-top:14px;
+  max-height:44vh;
+  overflow:auto;
+}
+.loveNote p{ line-height:1.55; font-size:15px; }
+.sig{ margin-top:10px; font-weight:700; }
+</style>
 </head>
+
 <body>
-  <div class="hearts" id="hearts" aria-hidden="true"></div>
 
-  <main class="card">
-    <!-- ✅ Centered header for ALL pages -->
-    <div class="top">
-      <div class="badge">💘</div>
-      <div>
-        <h1>HAPPY VALENTINES DAY MY POOK</h1>
-        <p id="tinyLine">only for Dana 🤫</p>
-      </div>
+<div class="hearts" id="hearts"></div>
+
+<main class="card">
+<div class="top">
+  <div class="badge">💘</div>
+  <h1>HAPPY VALENTINES DAY MY POOK</h1>
+  <div id="tinyLine">only for Dana 🤫</div>
+</div>
+
+<section class="stage">
+
+<!-- Intro -->
+<div class="panel active scaleIntro" id="panelIntro">
+  <div class="center">
+    <h2 class="big">Hi My Love ❤️</h2>
+    <p class="sub" id="introText"></p>
+    <div class="btnrow">
+      <button class="yes" id="btnContinue">Continue ➜</button>
     </div>
+  </div>
+</div>
 
-    <section class="stage">
-      <!-- Intro panel -->
-      <div class="panel active" id="panelIntro">
-        <div class="center">
-          <h2 class="big">Hi My Love ♥️</h2>
-          <p class="sub" id="introText"></p>
+<!-- Ask -->
+<div class="panel scaleAsk" id="panelAsk">
+  <div class="center">
+    <h2 class="big">Dana, will you be my Valentine? 💌</h2>
+    <p class="sub" id="askSub"></p>
+    <div class="btnrow">
+      <button class="yes" id="btnYes">YESSSSSS 😘</button>
+    </div>
+    <div class="arena">
+      <button class="no noMover" id="btnNo">No 😔</button>
+    </div>
+    <div class="sub" id="noHint">You sure? 🥺</div>
+  </div>
+</div>
 
-          <div class="btnrow">
-            <button class="yes" id="btnContinue">Continue ➜</button>
-          </div>
-        </div>
-      </div>
+<!-- Yes -->
+<div class="panel" id="panelYes">
+  <div class="center">
+    <h2 class="big">YAYYYYYYY!!! 💞💞💞</h2>
+    <p class="sub">Okay now you’re officially mine forever 😜</p>
+    <div class="loveNote">
+      <h3>Hey Dana,</h3>
+      <p id="loveBody"></p>
+      <div class="sig">— from your ugly bugly, Sehej ♥️</div>
+    </div>
+  </div>
+</div>
 
-      <!-- Question panel -->
-      <div class="panel" id="panelAsk">
-        <div class="center">
-          <h2 class="big">Dana, will you be my Valentine? 💌</h2>
-          <p class="sub" id="askSub"></p>
+</section>
+</main>
 
-          <div class="btnrow">
-            <button class="yes" id="btnYes">YESSSSSS 😘</button>
-          </div>
+<script>
+const INTRO_LINE = "I have been programming this for a month and I really hope you like this. I know we are long distance but I don't ever wanna let that stop me from showing how obsessed and in love I am with you. I hope it's not too cringe!!!!";
+const ASK_SUB = "No pressure… but just don't let this be the new worst day of my life 😭💕";
 
-          <div class="arena" id="arena">
-            <button class="no noMover" id="btnNo">No 😔</button>
-          </div>
+const YES_BODY = `Dana, I love you so much... (rest of your message stays here)`;
 
-          <div class="hint" id="noHint">Try clicking “No” if you dare.</div>
-        </div>
-      </div>
+// elements
+const panelIntro = document.getElementById("panelIntro");
+const panelAsk = document.getElementById("panelAsk");
+const panelYes = document.getElementById("panelYes");
 
-      <!-- Yes panel -->
-      <div class="panel" id="panelYes">
-        <div class="center fadeIn">
-          <h2 class="big">YAYYYYYYY!!! 💞💞💞</h2>
-          <p class="sub">Okay now you’re officially mine forever 😜</p>
+document.getElementById("introText").textContent = INTRO_LINE;
+document.getElementById("askSub").textContent = ASK_SUB;
+document.getElementById("loveBody").innerHTML = YES_BODY.replace(/\n/g,"<br>");
 
-          <div class="loveNote">
-            <h2 id="loveTitle"> Hey Dana, </h2>
-            <p id="loveBody"></p>
-            <div class="sig" id="sigLine">— from your your ugly bugly, Sehej ♥️</div>
-          </div>
+function show(p){
+  [panelIntro,panelAsk,panelYes].forEach(x=>x.classList.remove("active"));
+  p.classList.add("active");
+}
 
-          <div class="btnrow">
-            <button class="ghost" id="btnReplay">Replay</button>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+document.getElementById("btnContinue").onclick=()=>show(panelAsk);
+document.getElementById("btnYes").onclick=()=>show(panelYes);
 
-  <script>
-    // ====== EASY CUSTOMIZE (edit these) ======
-    const INTRO_LINE = "I have been programming this for a month and I really hope you like this. I know we are long distance but I don't ever wanna let that stop me from showing how obsessed and in love I am with you. I hope it's not too cringe!!!!";
-    const ASK_SUB = "No pressure… but just don't let this be the new worst day of my life 😭💕";
-    const YES_TITLE = "For the most beautiful girl in the whole world ❤️";
-    const YES_BODY = `
-Dana, I love you so much. I honestly never thought i’d ever feel this type of way towards anyone in my life. Not a single waking moment goes by without me constantly being obsessed with you (so suffocating 🙄). I acc wanna talk abt a very underrated quality that you have which i don’t mention nearly enough, which is your maturity in the way you handle yourself. Like you have so many responsibilities and commitments, but you are never the one to js constantly complain and act tired abt them . IDK how to describe it but you js have a very strong persona, which I love. You never shy away from expressing yourself or your opinions, and it’s obv very attractive but also very inspiring for many ppl, including me. Aside from this, I mean you got the usual suspects, like you’re so gorgeous (duh look in the mirror) or so funny. But the one thing I love abt you is that being w you feels so easy and freeing. I see all these other guys talk abt their women like they are a chore, which I genuinely don’t get cuz I crave for our moments together. Of the top of my head, one hangout that I will never be able to forget is the one when we went to point pleasant. The moment when we were hugging each other and looking into the ocean while the wind was blowing on us, ik it’s so cliche 😭 but that is a scene I will never ever forget in my life. At that moment, I genuinely wished that time would stop so I can cherish you for as long as I want, without anything getting between us. I know that we are not permanent l, but you genuinely taught me how to love someone with your whole being. If given a chance to alter anything in these past 2 years, I would not change a single thing cuz everything was perfect as long as I had you. All in all, this was my long way of saying I miss you and I want you to be my valentine. I know I’m not there to give you a big gift myself, but I know I can try my best from all the way here in Hamilton. I don’t have to get on a plane or drive 19 hrs to be with you, cuz you’re always with me.. in my thoughts, in my dreams and in my heart. You deserve more than I could possibly ever give you, but everything I ever have is yours. I love you so much Dana and thank you all the times we had together.
+// hearts
+const heartChars=["💖","💘","💝","💗","💓","💕","❤️"];
+function spawnHeart(){
+  const el=document.createElement("div");
+  el.className="heart";
+  el.textContent=heartChars[Math.floor(Math.random()*heartChars.length)];
+  el.style.left=Math.random()*100+"vw";
+  el.style.bottom="-20vh";
+  el.style.fontSize=(18+Math.random()*18)+"px";
+  el.style.animationDuration=(3+Math.random()*3)+"s";
+  document.getElementById("hearts").appendChild(el);
+  setTimeout(()=>el.remove(),6000);
+}
+setInterval(spawnHeart,180);
+</script>
 
-Happy Valentine’s Day, my love. 🥺💘
-    `.trim();
-    const SIGNATURE = "— from your ugly bugly, Sehej ♥️";
-
-    // ====== elements ======
-    const panelIntro = document.getElementById("panelIntro");
-    const panelAsk = document.getElementById("panelAsk");
-    const panelYes = document.getElementById("panelYes");
-
-    const introText = document.getElementById("introText");
-    const askSub = document.getElementById("askSub");
-    const loveTitle = document.getElementById("loveTitle");
-    const loveBody = document.getElementById("loveBody");
-    const sigLine = document.getElementById("sigLine");
-
-    const btnContinue = document.getElementById("btnContinue");
-    const btnYes = document.getElementById("btnYes");
-    const btnNo = document.getElementById("btnNo");
-    const btnReplay = document.getElementById("btnReplay");
-
-    const arena = document.getElementById("arena");
-    const noHint = document.getElementById("noHint");
-    const hearts = document.getElementById("hearts");
-
-    // ====== init copy ======
-    introText.textContent = INTRO_LINE;
-    askSub.textContent = ASK_SUB;
-    loveTitle.textContent = YES_TITLE;
-    loveBody.innerHTML = YES_BODY.replace(/\n/g, "<br>");
-    sigLine.textContent = SIGNATURE;
-
-    // ====== panel helper ======
-    function show(panel){
-      [panelIntro, panelAsk, panelYes].forEach(p => p.classList.remove("active"));
-      panel.classList.add("active");
-    }
-
-    btnContinue.addEventListener("click", () => show(panelAsk));
-    btnYes.addEventListener("click", () => show(panelYes));
-
-    // ====== hearts generator (runs in background all the time) ======
-    const heartChars = ["💖","💘","💝","💗","💓","💕","❤️","🫶"];
-    let heartTimer = null;
-
-    function spawnHeart(){
-      const el = document.createElement("div");
-      el.className = "heart";
-      el.textContent = heartChars[Math.floor(Math.random()*heartChars.length)];
-      const left = Math.random()*100;
-      const size = 18 + Math.random()*18;
-      const dur = 3.2 + Math.random()*2.8;
-      el.style.left = left + "vw";
-      el.style.bottom = (-10 - Math.random()*20) + "vh";
-      el.style.fontSize = size + "px";
-      el.style.animationDuration = dur + "s";
-      hearts.appendChild(el);
-      setTimeout(() => el.remove(), dur*1000 + 200);
-    }
-
-    function startHearts(){
-      if (heartTimer) return;
-      for(let i=0;i<12;i++) setTimeout(spawnHeart, i*80);
-      heartTimer = setInterval(spawnHeart, 180);
-    }
-    startHearts();
-
-    // ====== No button run away + "you sure?" cycling ======
-    const noPhrases = [
-      "You sure? 🥺",
-      "Ik it was a misclick dw? ✌🏾",
-      "Come on bruh 😔",
-      "Ok I was lying, I DO NOT like treats💔",
-      "Crying in front of the lunch lady pt 2. 🗣️",
-      "What happened to us against the world 😒"
-    ];
-    let noCount = 0;
-
-    function moveNoButton(){
-      const rect = arena.getBoundingClientRect();
-      const btnRect = btnNo.getBoundingClientRect();
-
-      const padding = 10;
-      const maxX = rect.width - btnRect.width - padding;
-      const maxY = rect.height - btnRect.height - padding;
-
-      const x = padding + Math.random()*Math.max(0, maxX);
-      const y = padding + Math.random()*Math.max(0, maxY);
-
-      btnNo.style.left = x + "px";
-      btnNo.style.top  = y + "px";
-      btnNo.style.transform = "translate(0,0)";
-    }
-
-    function updateNoHint(){
-      const phrase = noPhrases[noCount % noPhrases.length];
-      noHint.textContent = phrase;
-      noCount++;
-    }
-
-    btnNo.addEventListener("mouseenter", () => {
-      moveNoButton();
-      updateNoHint();
-    });
-    btnNo.addEventListener("click", (e) => {
-      e.preventDefault();
-      moveNoButton();
-      updateNoHint();
-    });
-
-    // ====== replay (button only) ======
-    function replay(){
-      noCount = 0;
-      noHint.textContent = "Try clicking “No” if you dare.";
-      btnNo.style.left = "58%";
-      btnNo.style.top = "54%";
-      btnNo.style.transform = "translate(-50%, -50%)";
-      show(panelIntro);
-    }
-    btnReplay.addEventListener("click", replay);
-  </script>
 </body>
 </html>

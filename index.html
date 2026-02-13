@@ -55,7 +55,6 @@ body{
   border: 1px solid rgba(255,255,255,.18);
   backdrop-filter: blur(12px);
   z-index:1;
-  overflow:hidden;
 }
 
 /* header */
@@ -189,8 +188,9 @@ button{
   background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.18);
   margin-top:12px;
-  max-height:38vh;
-  overflow:auto;
+  max-height:52vh;     /* bigger so more of your message shows */
+  overflow:auto;       /* keeps scroll if it still gets long */
+  padding-bottom:26px; /* extra breathing room for last line */
 }
 .loveNote p{ line-height:1.55; font-size:15px; margin:0; }
 .sig{ margin-top:10px; font-weight:700; }

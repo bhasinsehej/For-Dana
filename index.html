@@ -37,7 +37,12 @@ body{
 
 /* floating hearts */
 .hearts{ position:fixed; inset:0; pointer-events:none; z-index:0; }
-.heart{ position:absolute; font-size:22px; animation: floatUp linear forwards; filter: drop-shadow(0 10px 20px rgba(0,0,0,.35)); }
+.heart{
+  position:absolute;
+  font-size:22px;
+  animation: floatUp linear forwards;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,.35));
+}
 @keyframes floatUp{
   from{ transform: translateY(20px) scale(.8); opacity:0; }
   10%{opacity:1}
@@ -49,8 +54,7 @@ body{
   width:min(820px, 94vw);
   height:min(84vh, 640px);
   overflow:hidden;
-  padding:22px 26px;
-  padding-bottom:30px;
+  padding:22px 26px 30px;
   border-radius:28px;
   background: linear-gradient(180deg, var(--card2), var(--card));
   border: 1px solid rgba(255,255,255,.18);
@@ -151,11 +155,14 @@ h1{
 #panelIntro .sub{ font-size:20px; line-height:1.55; max-width:700px; }
 
 /* ask */
-#panelAsk .big{ font-size:34px; margin:0 0 10px; } /* reduced so no scroll for No */
+#panelAsk .big{ font-size:34px; margin:0 0 10px; }
 #panelAsk .sub{ font-size:18px; line-height:1.55; max-width:680px; }
 
-/* yes */
-#panelYes .big{ font-size:42px; margin:0 0 10px; } /* bring back the YAY sizing */
+/* yes: reduced so signature fits */
+#panelYes .big{
+  font-size:34px;     /* smaller so bottom signature shows */
+  margin:0 0 6px;     /* tighter spacing */
+}
 
 /* buttons */
 .btnrow{ margin-top:16px; display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
@@ -200,8 +207,8 @@ button:active{ transform: scale(.98); }
   border-radius:20px;
   background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.18);
-  margin-top:12px;
-  max-height:42vh;
+  margin-top:8px;     /* tighter so signature fits */
+  max-height:46vh;    /* more room for the box */
   overflow:auto;
   padding-bottom:26px;
 }
@@ -260,12 +267,10 @@ button:active{ transform: scale(.98); }
     <!-- YES -->
     <div class="panel" id="panelYes">
       <div class="center">
-        <!-- ✅ YAY is BACK -->
         <h2 class="big">YAYYYYYYY!!! 💞💞💞</h2>
         <p class="sub">Okay now you’re officially mine forever 😜</p>
 
         <div class="loveNote">
-          <!-- ✅ Removed bold "Hey Dana," header -->
           <p id="loveBody"></p>
           <div class="sig">— from your ugly bugly, Sehej ♥️</div>
         </div>

@@ -201,22 +201,46 @@ button:active{ transform: scale(.98); }
 }
 
 /* love note */
-.loveNote{
   text-align:left;
   padding:18px;
   border-radius:20px;
   background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.18);
-  margin-top:8px;     /* tighter so signature fits */
-  max-height:46vh;    /* more room for the box */
+  margin-top:8px;
+  max-height:46vh;
   overflow:auto;
   padding-bottom:26px;
 }
-.loveNote p{ line-height:1.55; font-size:15px; margin:0; color:#ffe6f0; }
-.sig{ margin-top:10px; font-weight:700; }
+
+.loveNote p{
+  line-height:1.55;
+  font-size:15px;
+  margin:0;
+  color:#ffe6f0;
+}
+
+.closingRow{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:20px;
+  margin-top:18px;
+  flex-wrap:wrap;
+}
+
+.closingLine{
+  font-weight:600;
+}
+
+.sig{
+  text-align:right;
+  font-weight:700;
+  opacity:.9;
+}
 </style>
 </head>
 
+  
 <body>
 <div class="hearts" id="hearts"></div>
 
@@ -275,7 +299,7 @@ button:active{ transform: scale(.98); }
 
   <div class="closingRow">
     <span class="closingLine">Happy Valentine’s Day, my love. 🥺💘</span>
-    <span class="closingLine">— from your ugly bugly, Sehej ♥️</span>
+    <span class="sig">— from your ugly bugly, Sehej ♥️</span>
   </div>
 </div>
       </div>
@@ -290,7 +314,7 @@ const INTRO_LINE = "I have been programming this for a month and I really hope y
 const ASK_SUB = "No pressure… but just don't let this be the new worst day of my life 😭💕";
 
 const YES_BODY = `Dana, I love you so much. I honestly never thought i’d ever feel this type of way towards anyone in my life. Not a single waking moment goes by without me constantly being obsessed with you (so suffocating 🙄). I acc wanna talk abt a very underrated quality that you have which i don’t mention nearly enough, which is your maturity in the way you handle yourself. Like you have so many responsibilities and commitments, but you are never the one to js constantly complain and act tired abt them . IDK how to describe it but you js have a very strong persona, which I love. You never shy away from expressing yourself or your opinions, and it’s obv very attractive but also very inspiring for many ppl, including me. Aside from this, I mean you got the usual suspects, like you’re so gorgeous (duh look in the mirror) or so funny. But the one thing I love abt you is that being w you feels so easy and freeing. I see all these other guys talk abt their women like they are a chore, which I genuinely don’t get cuz I crave for our moments together. Of the top of my head, one hangout that I will never be able to forget is the one when we went to point pleasant. The moment when we were hugging each other and looking into the ocean while the wind was blowing on us, ik it’s so cliche 😭 but that is a scene I will never ever forget in my life. At that moment, I genuinely wished that time would stop so I can cherish you for as long as I want, without anything getting between us. I know that we are not permanent l, but you genuinely taught me how to love someone with your whole being. If given a chance to alter anything in these past 2 years, I would not change a single thing cuz everything was perfect as long as I had you. All in all, this was my long way of saying I miss you and I want you to be my valentine. I know I’m not there to give you a big gift myself, but I know I can try my best from all the way here in Hamilton. I don’t have to get on a plane or drive 19 hrs to be with you, cuz you’re always with me.. in my thoughts, in my dreams and in my heart. You deserve more than I could possibly ever give you, but everything I ever have is yours. I love you so much Dana and thank you all the times we had together. 
-Happy Valentine’s Day, my love. 🥺💘`;
+`;
 
 /* ===== ELEMENTS ===== */
 const introText = document.getElementById("introText");

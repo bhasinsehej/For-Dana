@@ -49,10 +49,25 @@ body{
   border: 1px solid rgba(255,255,255,.18);
   backdrop-filter: blur(12px);
   z-index:1;
+  will-change: transform;
+}
+
+/* little screen bounce/shake on NO */
+@keyframes shakePop{
+  0%   { transform: translate3d(0,0,0) scale(1); }
+  15%  { transform: translate3d(-6px, 2px,0) scale(1.01); }
+  30%  { transform: translate3d(6px,-2px,0) scale(1.01); }
+  45%  { transform: translate3d(-5px, 1px,0) scale(1.01); }
+  60%  { transform: translate3d(5px,-1px,0) scale(1.01); }
+  75%  { transform: translate3d(-3px, 0px,0) scale(1.005); }
+  100% { transform: translate3d(0,0,0) scale(1); }
+}
+.card.shake{
+  animation: shakePop .35s ease both;
 }
 
 /* header */
-.top{ text-align:center; margin-bottom:26px; }
+.top{ text-align:center; margin-bottom:18px; }
 .badge{
   width:50px; height:50px;
   display:grid; place-items:center;
@@ -83,13 +98,13 @@ h1{ margin:0; font-size:22px; text-transform:uppercase; letter-spacing:1px; }
   margin:0 auto;
 }
 
-/* ✅ My Melody block (shows on every screen) */
+/* My Melody block */
 .melodyWrap{
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:6px;
-  margin: 6px 0 18px;
+  margin: 8px 0 18px;
 }
 .melodyImg{
   width:110px;
@@ -99,6 +114,14 @@ h1{ margin:0; font-size:22px; text-transform:uppercase; letter-spacing:1px; }
   padding:8px;
   border: 1px solid rgba(255,255,255,.18);
   box-shadow: 0 12px 30px rgba(0,0,0,.25);
+
+  /* ✅ subtle bounce */
+  animation: melodyBob 2.4s ease-in-out infinite;
+  transform-origin: 50% 80%;
+}
+@keyframes melodyBob{
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  50%     { transform: translateY(-6px) rotate(-1deg); }
 }
 .melodyCap{
   font-size:13px;
@@ -128,7 +151,6 @@ button{
 }
 .yes{ background: linear-gradient(180deg, var(--yes), var(--yes2)); color:#072318; }
 .no{ background: linear-gradient(180deg, var(--no), var(--no2)); color:#2a000b; }
-.ghost{ background:transparent; border:1px solid rgba(255,255,255,.3); color:white; }
 
 /* no arena */
 .arena{
@@ -146,6 +168,13 @@ button{
   left:58%;
   top:54%;
   transform:translate(-50%, -50%);
+}
+
+/* make the "you sure?" line visible */
+#noHint{
+  margin-top:14px;
+  font-size:16px;
+  opacity:.95;
 }
 
 /* yes note */
@@ -167,7 +196,7 @@ button{
 <body>
 <div class="hearts" id="hearts"></div>
 
-<main class="card">
+<main class="card" id="card">
   <div class="top">
     <div class="badge">💘</div>
     <h1>HAPPY VALENTINES DAY MY POOK</h1>
@@ -212,7 +241,7 @@ button{
           <button class="no noMover" id="btnNo">No 😔</button>
         </div>
 
-        <div class="sub" id="noHint">You sure? 🥺</div>
+        <div class="sub" id="noHint">Try clicking “No” if you dare.</div>
       </div>
     </div>
 
@@ -279,7 +308,17 @@ function spawnHeart(){
 }
 setInterval(spawnHeart,180);
 
-// no button run away
+// ✅ screen bounce/shake helper
+const card = document.getElementById("card");
+function shakeCard(){
+  card.classList.remove("shake");
+  // force reflow so animation restarts
+  void card.offsetWidth;
+  card.classList.add("shake");
+  setTimeout(()=>card.classList.remove("shake"), 420);
+}
+
+// no button run away + message
 const noPhrases = [
   "You sure? 🥺",
   "Ik it was a misclick dw? ✌🏾",
@@ -305,12 +344,24 @@ function moveNoButton(){
   btnNo.style.top  = y + "px";
   btnNo.style.transform = "translate(0,0)";
 }
+
 function updateNoHint(){
   noHint.textContent = noPhrases[noCount % noPhrases.length];
   noCount++;
 }
-btnNo.addEventListener("mouseenter", () => { moveNoButton(); updateNoHint(); });
-btnNo.addEventListener("click", (e) => { e.preventDefault(); moveNoButton(); updateNoHint(); });
+
+function handleNoAttempt(){
+  shakeCard();        // ✅ bounce effect
+  moveNoButton();     // ✅ run away
+  updateNoHint();     // ✅ message changes (not gone)
+}
+
+// on hover + click
+btnNo.addEventListener("mouseenter", handleNoAttempt);
+btnNo.addEventListener("click", (e) => {
+  e.preventDefault();
+  handleNoAttempt();
+});
 </script>
 
 </body>

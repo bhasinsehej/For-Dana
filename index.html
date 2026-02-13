@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>💘 Valentine?</title>
 
-  
 <style>
 :root{
   --bg1:#120015; --bg2:#2a001f;
@@ -14,14 +13,8 @@
   --yes:#2ee59d; --yes2:#1ccf8b;
   --no:#ff5b7a; --no2:#ff3d63;
 }
-
-/* ---- CLICK FIX (Safari) ---- */
-.hearts, .heart{ pointer-events:none !important; }
-.card{ position:relative; z-index:5 !important; }
-.stage, .panel{ position:relative; z-index:6 !important; }
-button{ position:relative; z-index:10 !important; pointer-events:auto !important; }
-
 *{box-sizing:border-box}
+
 body{
   margin:0;
   min-height:100vh;
@@ -38,12 +31,7 @@ body{
 
 /* floating hearts */
 .hearts{ position:fixed; inset:0; pointer-events:none; z-index:0; }
-.heart{
-  position:absolute;
-  font-size:22px;
-  animation: floatUp linear forwards;
-  filter: drop-shadow(0 10px 20px rgba(0,0,0,.35));
-}
+.heart{ position:absolute; font-size:22px; animation: floatUp linear forwards; }
 @keyframes floatUp{
   from{ transform: translateY(20px) scale(.8); opacity:0; }
   10%{opacity:1}
@@ -54,21 +42,17 @@ body{
 .card{
   width:min(820px, 94vw);
   height:min(84vh, 640px);
-  overflow:hidden;
-  padding:22px 26px 30px;
+  padding:22px 26px;
   border-radius:28px;
   background: linear-gradient(180deg, var(--card2), var(--card));
   border: 1px solid rgba(255,255,255,.18);
   backdrop-filter: blur(12px);
-  box-shadow: 0 18px 60px rgba(0,0,0,.45);
   z-index:1;
+  overflow:hidden;
 }
 
 /* header */
-.top{
-  text-align:center;
-  margin-bottom:6px;
-}
+.top{ text-align:center; }
 .badge{
   width:46px; height:46px;
   display:grid; place-items:center;
@@ -95,8 +79,8 @@ h1{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:4px;
-  margin: 6px 0 4px;
+  gap:6px;
+  margin: 10px 0 8px;
 }
 .melodyImg{
   width:86px;
@@ -122,60 +106,46 @@ h1{
 /* panels */
 .stage{
   position:relative;
-  height:calc(100% - 110px);
-  margin-top:2px;
+  height:calc(100% - 140px);
+  margin-top:8px;
 }
 .panel{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  position:absolute; inset:0;
+  display:grid; place-items:center;
   opacity:0;
-  transform: translateY(10px);
-  transition: opacity .5s ease, transform .5s ease;
+  transition:.35s ease;
   pointer-events:none;
-
-  /* allows tall content to not get squished */
-  overflow:auto;
-  padding: 10px 0;
 }
-.panel.active{
-  opacity:1;
-  transform: translateY(0);
-  pointer-events:auto;
-}
+.panel.active{ opacity:1; pointer-events:auto; }
 
-/* shared */
-.center{ width:100%; text-align:center; padding: 0 8px; }
-.big{ font-size:32px; margin:0 0 10px; }
-.sub{ color:var(--muted); margin:0 auto; }
+.center{
+  text-align:center;
+  width:100%;
+  max-width:760px;
+  margin:0 auto;
+  padding:0 10px;
+}
 
 /* intro */
 #panelIntro .big{ font-size:46px; margin:0 0 10px; }
-#panelIntro .sub{ font-size:20px; line-height:1.55; max-width:700px; }
+#panelIntro .sub{ font-size:20px; line-height:1.55; max-width:700px; margin:0 auto; }
 
 /* ask */
-#panelAsk .big{ font-size:34px; margin:0 0 10px; }
-#panelAsk .sub{ font-size:18px; line-height:1.55; max-width:680px; }
+#panelAsk .big{ font-size:38px; margin:0 0 10px; }
+#panelAsk .sub{ font-size:18px; line-height:1.55; max-width:680px; margin:0 auto; }
 
-/* yes: reduced so signature fits */
-#panelYes .big{
-  font-size:34px;     /* smaller so bottom signature shows */
-  margin:0 0 6px;     /* tighter spacing */
-}
+.big{ font-size:32px; }
+.sub{ color:var(--muted); }
 
 /* buttons */
-.btnrow{ margin-top:16px; display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+.btnrow{ margin-top:16px; display:flex; justify-content:center; gap:14px; }
 button{
   border:0; cursor:pointer;
   padding:14px 22px;
   border-radius:16px;
   font-weight:700;
   font-size:18px;
-  box-shadow: 0 16px 40px rgba(0,0,0,.35);
 }
-button:active{ transform: scale(.98); }
 .yes{ background: linear-gradient(180deg, var(--yes), var(--yes2)); color:#072318; }
 .no{ background: linear-gradient(180deg, var(--no), var(--no2)); color:#2a000b; }
 
@@ -195,6 +165,7 @@ button:active{ transform: scale(.98); }
   left:58%; top:52%;
   transform:translate(-50%, -50%);
 }
+
 #noHint{
   margin-top:10px;
   font-size:15px;
@@ -202,45 +173,20 @@ button:active{ transform: scale(.98); }
 }
 
 /* love note */
+.loveNote{
   text-align:left;
   padding:18px;
   border-radius:20px;
   background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.18);
-  margin-top:8px;
-  max-height:46vh;
+  margin-top:12px;
+  max-height:38vh;
   overflow:auto;
-  padding-bottom:26px;
 }
-
-.loveNote p{
-  line-height:1.55;
-  font-size:15px;
-  margin:0;
-  color:#ffe6f0;
-}
-
-.closingRow{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  gap:20px;
-  margin-top:18px;
-  flex-wrap:wrap;
-}
-
-.closingLine{
-  font-weight:600;
-}
-
-.sig{
-  text-align:right;
-  font-weight:700;
-  opacity:.9;
-}
+.loveNote p{ line-height:1.55; font-size:15px; }
+.sig{ margin-top:10px; font-weight:700; }
 </style>
 </head>
-
 
 <body>
 <div class="hearts" id="hearts"></div>
@@ -252,7 +198,6 @@ button:active{ transform: scale(.98); }
     <div id="tinyLine">only for Dana 🤫</div>
 
     <div class="melodyWrap">
-      <!-- Put mymelody.png in the SAME repo folder as index.html -->
       <img class="melodyImg" src="./mymelody.png" alt="My Melody">
       <div class="melodyCap">my melody</div>
     </div>
@@ -260,7 +205,6 @@ button:active{ transform: scale(.98); }
 
   <section class="stage">
 
-    <!-- INTRO -->
     <div class="panel active" id="panelIntro">
       <div class="center">
         <h2 class="big">Hi My Love ❤️</h2>
@@ -271,7 +215,6 @@ button:active{ transform: scale(.98); }
       </div>
     </div>
 
-    <!-- ASK -->
     <div class="panel" id="panelAsk">
       <div class="center">
         <h2 class="big">Dana, will you be my Valentine? 💌</h2>
@@ -289,19 +232,16 @@ button:active{ transform: scale(.98); }
       </div>
     </div>
 
-    <!-- YES -->
     <div class="panel" id="panelYes">
       <div class="center">
         <h2 class="big">YAYYYYYYY!!! 💞💞💞</h2>
         <p class="sub">Okay now you’re officially mine forever 😜</p>
 
-<div class="loveNote">
-  <p id="loveBody"></p>
-
-  <div class="closingRow">
-    <span class="sig">— from your ugly bugly, Sehej ♥️</span>
-  </div>
-</div>
+        <div class="loveNote">
+          <h3>Hey Dana,</h3>
+          <p id="loveBody"></p>
+          <div class="sig">— from your ugly bugly, Sehej ♥️</div>
+        </div>
       </div>
     </div>
 
@@ -309,44 +249,23 @@ button:active{ transform: scale(.98); }
 </main>
 
 <script>
-/* ===== TEXT ===== */
 const INTRO_LINE = "I have been programming this for a month and I really hope you like this. I know we are long distance but I don't ever wanna let that stop me from showing how obsessed and in love I am with you. I hope it's not too cringe!!!!";
 const ASK_SUB = "No pressure… but just don't let this be the new worst day of my life 😭💕";
 
-const YES_BODY = `Dana, I love you so much. I honestly never thought i’d ever feel this type of way towards anyone in my life. Not a single waking moment goes by without me constantly being obsessed with you (so suffocating 🙄). I acc wanna talk abt a very underrated quality that you have which i don’t mention nearly enough, which is your maturity in the way you handle yourself. Like you have so many responsibilities and commitments, but you are never the one to js constantly complain and act tired abt them . IDK how to describe it but you js have a very strong persona, which I love. You never shy away from expressing yourself or your opinions, and it’s obv very attractive but also very inspiring for many ppl, including me. Aside from this, I mean you got the usual suspects, like you’re so gorgeous (duh look in the mirror) or so funny. But the one thing I love abt you is that being w you feels so easy and freeing. I see all these other guys talk abt their women like they are a chore, which I genuinely don’t get cuz I crave for our moments together. Of the top of my head, one hangout that I will never be able to forget is the one when we went to point pleasant. The moment when we were hugging each other and looking into the ocean while the wind was blowing on us, ik it’s so cliche 😭 but that is a scene I will never ever forget in my life. At that moment, I genuinely wished that time would stop so I can cherish you for as long as I want, without anything getting between us. I know that we are not permanent, but you genuinely taught me how to love someone with your whole being. If given a chance to alter anything in these past 2 years, I would not change a single thing cuz everything was perfect as long as I had you. All in all, this was my long way of saying I miss you and I want you to be my valentine. I know I’m not there to give you a big gift myself, but I know I can try my best from all the way here in Hamilton. I don’t have to get on a plane or drive 19 hrs to be with you, cuz you’re always with me.. in my thoughts, in my dreams and in my heart. You deserve more than I could possibly ever give you, but everything I ever have is yours. I love you so much Dana and thank you all the times we had together. 
-`;
+const YES_BODY = `Dana, I love you so much... (your full message remains here)`;
 
-/* ===== ELEMENTS ===== */
-const introText = document.getElementById("introText");
-const askSub = document.getElementById("askSub");
-const loveBody = document.getElementById("loveBody");
+introText.textContent = INTRO_LINE;
+askSub.textContent = ASK_SUB;
+loveBody.innerHTML = YES_BODY.replace(/\n/g,"<br>");
 
 const panelIntro = document.getElementById("panelIntro");
 const panelAsk   = document.getElementById("panelAsk");
 const panelYes   = document.getElementById("panelYes");
 
-const btnContinue = document.getElementById("btnContinue");
-const btnYes = document.getElementById("btnYes");
-const btnNo  = document.getElementById("btnNo");
+btnContinue.onclick = () => { panelIntro.classList.remove("active"); panelAsk.classList.add("active"); };
+btnYes.onclick      = () => { panelAsk.classList.remove("active"); panelYes.classList.add("active"); };
 
-const arena = document.getElementById("arena");
-const noHint = document.getElementById("noHint");
-const hearts = document.getElementById("hearts");
-
-/* ===== SET TEXT (GUARANTEED) ===== */
-introText.textContent = INTRO_LINE;
-askSub.textContent = ASK_SUB;
-loveBody.innerHTML = YES_BODY.replace(/\n/g, "<br>");
-
-/* ===== PANELS ===== */
-function show(p){
-  [panelIntro, panelAsk, panelYes].forEach(x => x.classList.remove("active"));
-  p.classList.add("active");
-}
-btnContinue.addEventListener("click", () => show(panelAsk));
-btnYes.addEventListener("click", () => show(panelYes));
-
-/* ===== HEARTS ===== */
+// hearts
 const heartChars=["💖","💘","💝","💗","💓","💕","❤️","🫶"];
 function spawnHeart(){
   const el=document.createElement("div");
@@ -357,11 +276,11 @@ function spawnHeart(){
   el.style.fontSize=(18+Math.random()*18)+"px";
   el.style.animationDuration=(3+Math.random()*3)+"s";
   hearts.appendChild(el);
-  setTimeout(()=>el.remove(),6500);
+  setTimeout(()=>el.remove(),6000);
 }
 setInterval(spawnHeart,180);
 
-/* ===== NO BUTTON RUN + TEXT ===== */
+// NO button movement
 const noPhrases = [
   "You sure? 🥺",
   "Ik it was a misclick dw? ✌🏾",

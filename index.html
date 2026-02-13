@@ -46,8 +46,8 @@ body{
 /* card */
 .card{
   width:min(820px, 94vw);
-  max-height:90vh;
-  overflow-y:auto;
+  height:min(84vh, 640px);
+  overflow:hidden;
   padding:22px 26px;
   padding-bottom:30px;
   border-radius:28px;
@@ -188,7 +188,7 @@ button{
   background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.18);
   margin-top:12px;
-  max-height:52vh;     /* bigger so more of your message shows */
+  max-height:42vh;     /* bigger so more of your message shows */
   overflow:auto;       /* keeps scroll if it still gets long */
   padding-bottom:26px; /* extra breathing room for last line */
 }

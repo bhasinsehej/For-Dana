@@ -13,6 +13,12 @@
   --yes:#2ee59d; --yes2:#1ccf8b;
   --no:#ff5b7a; --no2:#ff3d63;
 }
+  /* ---- CLICK FIX (Safari) ---- */
+.hearts, .heart{ pointer-events:none !important; }
+.card{ position:relative; z-index:5 !important; }
+.stage, .panel{ position:relative; z-index:6 !important; }
+button{ position:relative; z-index:10 !important; pointer-events:auto !important; }
+  
 *{box-sizing:border-box}
 body{
   margin:0;

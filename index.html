@@ -12,18 +12,22 @@
   --text:#fff; --muted:#ffd6e7;
   --yes:#2ee59d; --yes2:#1ccf8b;
   --no:#ff5b7a; --no2:#ff3d63;
-  --shadow: 0 18px 60px rgba(0,0,0,.45);
 }
 
-*{ box-sizing:border-box; }
+/* ---- CLICK FIX (Safari) ---- */
+.hearts, .heart{ pointer-events:none !important; }
+.card{ position:relative; z-index:5 !important; }
+.stage, .panel{ position:relative; z-index:6 !important; }
+button{ position:relative; z-index:10 !important; pointer-events:auto !important; }
 
+*{box-sizing:border-box}
 body{
   margin:0;
   min-height:100vh;
   display:grid;
   place-items:center;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-  color:var(--text);
+  font-family: ui-sans-serif, system-ui;
+  color:white;
   background:
     radial-gradient(1200px 800px at 20% 10%, #5c003f 0%, transparent 55%),
     radial-gradient(1000px 700px at 80% 90%, #3b005c 0%, transparent 55%),
@@ -31,54 +35,39 @@ body{
   overflow:hidden;
 }
 
-/* floating hearts (never blocks clicks) */
-.hearts{
-  position:fixed;
-  inset:0;
-  pointer-events:none !important;
-  overflow:hidden;
-  z-index:0;
-}
-.heart{
-  position:absolute;
-  font-size:22px;
-  user-select:none;
-  pointer-events:none !important;
-  filter: drop-shadow(0 10px 20px rgba(0,0,0,.35));
-  animation: floatUp linear forwards;
-}
+/* floating hearts */
+.hearts{ position:fixed; inset:0; pointer-events:none; z-index:0; }
+.heart{ position:absolute; font-size:22px; animation: floatUp linear forwards; filter: drop-shadow(0 10px 20px rgba(0,0,0,.35)); }
 @keyframes floatUp{
-  from{ transform: translateY(20px) scale(.85) rotate(0deg); opacity:0; }
-  10%{ opacity:1; }
-  to{ transform: translateY(-120vh) scale(1.25) rotate(20deg); opacity:0; }
+  from{ transform: translateY(20px) scale(.8); opacity:0; }
+  10%{opacity:1}
+  to{ transform: translateY(-120vh) scale(1.3); opacity:0; }
 }
 
-/* card layout: FLEX fixes ALL squish + calc issues */
+/* card */
 .card{
   width:min(820px, 94vw);
   height:min(84vh, 640px);
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;                 /* keep card clean */
-  padding:22px 26px 18px;
+  overflow:hidden;
+  padding:22px 26px;
+  padding-bottom:30px;
   border-radius:28px;
   background: linear-gradient(180deg, var(--card2), var(--card));
-  border:1px solid rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.18);
   backdrop-filter: blur(12px);
-  box-shadow: var(--shadow);
-  position:relative;
-  z-index:5;
+  box-shadow: 0 18px 60px rgba(0,0,0,.45);
+  z-index:1;
 }
 
 /* header */
 .top{
   text-align:center;
-  flex:0 0 auto;
+  margin-bottom:6px;
 }
 .badge{
   width:46px; height:46px;
   display:grid; place-items:center;
-  margin:0 auto 8px;
+  margin:0 auto 8px auto;
   border-radius:16px;
   background:#ff3d631f;
   border:1px solid rgba(255,255,255,.18);
@@ -96,21 +85,21 @@ h1{
   opacity:.9;
 }
 
-/* My Melody (shows on ALL screens) */
+/* My Melody */
 .melodyWrap{
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:4px;
-  margin: 8px 0 6px; /* tighter spacing */
+  margin: 6px 0 4px;
 }
 .melodyImg{
-  width:78px;
+  width:86px;
   height:auto;
   border-radius:16px;
   background: rgba(255,255,255,.10);
   padding:8px;
-  border:1px solid rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.18);
   box-shadow: 0 12px 30px rgba(0,0,0,.25);
   animation: melodyBob 2.4s ease-in-out infinite;
 }
@@ -125,29 +114,26 @@ h1{
   color: rgba(255,255,255,.85);
 }
 
-/* stage: flex child that fills remaining height */
+/* panels */
 .stage{
   position:relative;
-  flex:1 1 auto;
-  min-height:0;       /* CRITICAL: allows inner overflow without squish */
-  margin-top:6px;
+  height:calc(100% - 110px);
+  margin-top:2px;
 }
-
-/* panels: absolute layered, scrolls if needed */
 .panel{
   position:absolute;
   inset:0;
-  opacity:0;
-  transform: translateY(10px);
-  transition: opacity .45s ease, transform .45s ease;
-  pointer-events:none;
-
   display:flex;
   align-items:center;
   justify-content:center;
+  opacity:0;
+  transform: translateY(10px);
+  transition: opacity .5s ease, transform .5s ease;
+  pointer-events:none;
 
-  overflow:auto;          /* if content is taller, panel scrolls */
-  padding: 8px 0;
+  /* allows tall content to not get squished */
+  overflow:auto;
+  padding: 10px 0;
 }
 .panel.active{
   opacity:1;
@@ -155,45 +141,31 @@ h1{
   pointer-events:auto;
 }
 
-.center{
-  width:100%;
-  max-width:760px;
-  padding:0 10px;
-  text-align:center;
-  margin:0 auto;
-}
-
-.big{ margin:0 0 10px; }
+/* shared */
+.center{ width:100%; text-align:center; padding: 0 8px; }
+.big{ font-size:32px; margin:0 0 10px; }
 .sub{ color:var(--muted); margin:0 auto; }
 
-/* bigger fonts for first two screens */
-#panelIntro .big{ font-size:44px; }
-#panelIntro .sub{ font-size:20px; line-height:1.55; max-width:720px; }
+/* intro */
+#panelIntro .big{ font-size:46px; margin:0 0 10px; }
+#panelIntro .sub{ font-size:20px; line-height:1.55; max-width:700px; }
 
-#panelAsk .big{ font-size:34px; }
-#panelAsk .sub{ font-size:18px; line-height:1.55; max-width:700px; }
+/* ask */
+#panelAsk .big{ font-size:34px; margin:0 0 10px; } /* reduced so no scroll for No */
+#panelAsk .sub{ font-size:18px; line-height:1.55; max-width:680px; }
 
-#panelYes .big{ font-size:34px; }
-#panelYes .sub{ font-size:16px; line-height:1.5; max-width:700px; }
+/* yes */
+#panelYes .big{ font-size:42px; margin:0 0 10px; } /* bring back the YAY sizing */
 
 /* buttons */
-.btnrow{
-  margin-top:16px;
-  display:flex;
-  justify-content:center;
-  gap:14px;
-  flex-wrap:wrap;
-}
+.btnrow{ margin-top:16px; display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
 button{
-  border:0;
-  cursor:pointer;
+  border:0; cursor:pointer;
   padding:14px 22px;
   border-radius:16px;
-  font-weight:800;
+  font-weight:700;
   font-size:18px;
   box-shadow: 0 16px 40px rgba(0,0,0,.35);
-  position:relative;
-  z-index:10;                 /* always clickable */
 }
 button:active{ transform: scale(.98); }
 .yes{ background: linear-gradient(180deg, var(--yes), var(--yes2)); color:#072318; }
@@ -201,7 +173,7 @@ button:active{ transform: scale(.98); }
 
 /* arena */
 .arena{
-  margin:14px auto 0;
+  margin:16px auto 0;
   width:100%;
   max-width:560px;
   height:120px;
@@ -221,31 +193,25 @@ button:active{ transform: scale(.98); }
   opacity:.95;
 }
 
-/* love note: THIS is what prevents bottom cut-off */
+/* love note */
 .loveNote{
   text-align:left;
-  padding:18px 18px 26px;
+  padding:18px;
   border-radius:20px;
   background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.18);
   margin-top:12px;
-
-  max-height: 44vh;   /* adjust visible amount */
-  overflow:auto;      /* scroll inside note when long */
+  max-height:42vh;
+  overflow:auto;
+  padding-bottom:26px;
 }
-.loveNote h3{ margin:0 0 8px; font-size:18px; }
-.loveNote p{ line-height:1.6; font-size:15px; margin:0; color:#ffe6f0; }
-.sig{ margin-top:10px; font-weight:800; opacity:.95; }
-
-/* optional: prettier scrollbars (works on webkit) */
-.loveNote::-webkit-scrollbar{ width:10px; }
-.loveNote::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.18); border-radius:10px; }
-.loveNote::-webkit-scrollbar-track{ background: rgba(255,255,255,.06); border-radius:10px; }
+.loveNote p{ line-height:1.55; font-size:15px; margin:0; color:#ffe6f0; }
+.sig{ margin-top:10px; font-weight:700; }
 </style>
 </head>
 
 <body>
-<div class="hearts" id="hearts" aria-hidden="true"></div>
+<div class="hearts" id="hearts"></div>
 
 <main class="card">
   <div class="top">
@@ -254,13 +220,14 @@ button:active{ transform: scale(.98); }
     <div id="tinyLine">only for Dana 🤫</div>
 
     <div class="melodyWrap">
-      <!-- make sure mymelody.png exists in SAME repo folder as index.html -->
+      <!-- Put mymelody.png in the SAME repo folder as index.html -->
       <img class="melodyImg" src="./mymelody.png" alt="My Melody">
       <div class="melodyCap">my melody</div>
     </div>
   </div>
 
   <section class="stage">
+
     <!-- INTRO -->
     <div class="panel active" id="panelIntro">
       <div class="center">
@@ -293,27 +260,27 @@ button:active{ transform: scale(.98); }
     <!-- YES -->
     <div class="panel" id="panelYes">
       <div class="center">
+        <!-- ✅ YAY is BACK -->
         <h2 class="big">YAYYYYYYY!!! 💞💞💞</h2>
         <p class="sub">Okay now you’re officially mine forever 😜</p>
 
         <div class="loveNote">
+          <!-- ✅ Removed bold "Hey Dana," header -->
+          <p id="loveBody"></p>
           <div class="sig">— from your ugly bugly, Sehej ♥️</div>
         </div>
       </div>
     </div>
+
   </section>
 </main>
 
 <script>
 /* ===== TEXT ===== */
-const INTRO_LINE =
-  "I have been programming this for a month and I really hope you like this. I know we are long distance but I don't ever wanna let that stop me from showing how obsessed and in love I am with you. I hope it's not too cringe!!!!";
+const INTRO_LINE = "I have been programming this for a month and I really hope you like this. I know we are long distance but I don't ever wanna let that stop me from showing how obsessed and in love I am with you. I hope it's not too cringe!!!!";
+const ASK_SUB = "No pressure… but just don't let this be the new worst day of my life 😭💕";
 
-const ASK_SUB =
-  "No pressure… but just don't let this be the new worst day of my life 😭💕";
-
-const YES_BODY = `Dana, I love you so much. I honestly never thought i’d ever feel this type of way towards anyone in my life. Not a single waking moment goes by without me constantly being obsessed with you (so suffocating 🙄). I acc wanna talk abt a very underrated quality that you have which i don’t mention nearly enough, which is your maturity in the way you handle yourself. Like you have so many responsibilities and commitments, but you are never the one to js constantly complain and act tired abt them . IDK how to describe it but you js have a very strong persona, which I love. You never shy away from expressing yourself or your opinions, and it’s obv very attractive but also very inspiring for many ppl, including me. Aside from this, I mean you got the usual suspects, like you’re so gorgeous (duh look in the mirror) or so funny. But the one thing I love abt you is that being w you feels so easy and freeing. I see all these other guys talk abt their women like they are a chore, which I genuinely don’t get cuz I crave for our moments together. Of the top of my head, one hangout that I will never be able to forget is the one when we went to point pleasant. The moment when we were hugging each other and looking into the ocean while the wind was blowing on us, ik it’s so cliche 😭 but that is a scene I will never ever forget in my life. At that moment, I genuinely wished that time would stop so I can cherish you for as long as I want, without anything getting between us. I know that we are not permanent l, but you genuinely taught me how to love someone with your whole being. If given a chance to alter anything in these past 2 years, I would not change a single thing cuz everything was perfect as long as I had you. All in all, this was my long way of saying I miss you and I want you to be my valentine. I know I’m not there to give you a big gift myself, but I know I can try my best from all the way here in Hamilton. I don’t have to get on a plane or drive 19 hrs to be with you, cuz you’re always with me.. in my thoughts, in my dreams and in my heart. You deserve more than I could possibly ever give you, but everything I ever have is yours. I love you so much Dana and thank you all the times we had together.
-
+const YES_BODY = `Dana, I love you so much. I honestly never thought i’d ever feel this type of way towards anyone in my life. Not a single waking moment goes by without me constantly being obsessed with you (so suffocating 🙄). I acc wanna talk abt a very underrated quality that you have which i don’t mention nearly enough, which is your maturity in the way you handle yourself. Like you have so many responsibilities and commitments, but you are never the one to js constantly complain and act tired abt them . IDK how to describe it but you js have a very strong persona, which I love. You never shy away from expressing yourself or your opinions, and it’s obv very attractive but also very inspiring for many ppl, including me. Aside from this, I mean you got the usual suspects, like you’re so gorgeous (duh look in the mirror) or so funny. But the one thing I love abt you is that being w you feels so easy and freeing. I see all these other guys talk abt their women like they are a chore, which I genuinely don’t get cuz I crave for our moments together. Of the top of my head, one hangout that I will never be able to forget is the one when we went to point pleasant. The moment when we were hugging each other and looking into the ocean while the wind was blowing on us, ik it’s so cliche 😭 but that is a scene I will never ever forget in my life. At that moment, I genuinely wished that time would stop so I can cherish you for as long as I want, without anything getting between us. I know that we are not permanent l, but you genuinely taught me how to love someone with your whole being. If given a chance to alter anything in these past 2 years, I would not change a single thing cuz everything was perfect as long as I had you. All in all, this was my long way of saying I miss you and I want you to be my valentine. I know I’m not there to give you a big gift myself, but I know I can try my best from all the way here in Hamilton. I don’t have to get on a plane or drive 19 hrs to be with you, cuz you’re always with me.. in my thoughts, in my dreams and in my heart. You deserve more than I could possibly ever give you, but everything I ever have is yours. I love you so much Dana and thank you all the times we had together. 
 Happy Valentine’s Day, my love. 🥺💘`;
 
 /* ===== ELEMENTS ===== */
@@ -333,7 +300,7 @@ const arena = document.getElementById("arena");
 const noHint = document.getElementById("noHint");
 const hearts = document.getElementById("hearts");
 
-/* ===== SET TEXT ===== */
+/* ===== SET TEXT (GUARANTEED) ===== */
 introText.textContent = INTRO_LINE;
 askSub.textContent = ASK_SUB;
 loveBody.innerHTML = YES_BODY.replace(/\n/g, "<br>");
@@ -342,8 +309,6 @@ loveBody.innerHTML = YES_BODY.replace(/\n/g, "<br>");
 function show(p){
   [panelIntro, panelAsk, panelYes].forEach(x => x.classList.remove("active"));
   p.classList.add("active");
-  // reset scroll position of panel when switching
-  p.scrollTop = 0;
 }
 btnContinue.addEventListener("click", () => show(panelAsk));
 btnYes.addEventListener("click", () => show(panelYes));
@@ -355,13 +320,13 @@ function spawnHeart(){
   el.className="heart";
   el.textContent=heartChars[Math.floor(Math.random()*heartChars.length)];
   el.style.left=Math.random()*100+"vw";
-  el.style.bottom=(-10 - Math.random()*15)+"vh";
+  el.style.bottom="-20vh";
   el.style.fontSize=(18+Math.random()*18)+"px";
-  el.style.animationDuration=(3.2+Math.random()*2.8)+"s";
+  el.style.animationDuration=(3+Math.random()*3)+"s";
   hearts.appendChild(el);
-  setTimeout(()=>el.remove(), 6500);
+  setTimeout(()=>el.remove(),6500);
 }
-setInterval(spawnHeart, 180);
+setInterval(spawnHeart,180);
 
 /* ===== NO BUTTON RUN + TEXT ===== */
 const noPhrases = [

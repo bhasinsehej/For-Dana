@@ -14,7 +14,6 @@
   --no:#ff5b7a; --no2:#ff3d63;
 }
 *{box-sizing:border-box}
-
 body{
   margin:0;
   min-height:100vh;
@@ -54,7 +53,7 @@ body{
 /* header */
 .top{
   text-align:center;
-  margin-bottom:6px; /* ✅ tighter */
+  margin-bottom:6px;
 }
 .badge{
   width:46px; height:46px;
@@ -82,8 +81,8 @@ h1{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:4px;          /* ✅ tighter */
-  margin: 6px 0 4px;/* ✅ tighter */
+  gap:4px;
+  margin: 6px 0 4px;
 }
 .melodyImg{
   width:86px;
@@ -109,8 +108,8 @@ h1{
 /* panels */
 .stage{
   position:relative;
-  height:calc(100% - 110px); /* ✅ reduced from 140px */
-  margin-top:2px;            /* ✅ tighter */
+  height:calc(100% - 110px);
+  margin-top:2px;
 }
 .panel{
   position:absolute; inset:0;
@@ -168,7 +167,6 @@ button{
   left:58%; top:52%;
   transform:translate(-50%, -50%);
 }
-
 #noHint{
   margin-top:10px;
   font-size:15px;
@@ -186,7 +184,7 @@ button{
   max-height:38vh;
   overflow:auto;
 }
-.loveNote p{ line-height:1.55; font-size:15px; }
+.loveNote p{ line-height:1.55; font-size:15px; margin:0; }
 .sig{ margin-top:10px; font-weight:700; }
 </style>
 </head>
@@ -208,6 +206,7 @@ button{
 
   <section class="stage">
 
+    <!-- INTRO -->
     <div class="panel active" id="panelIntro">
       <div class="center">
         <h2 class="big">Hi My Love ❤️</h2>
@@ -218,6 +217,7 @@ button{
       </div>
     </div>
 
+    <!-- ASK -->
     <div class="panel" id="panelAsk">
       <div class="center">
         <h2 class="big">Dana, will you be my Valentine? 💌</h2>
@@ -235,6 +235,7 @@ button{
       </div>
     </div>
 
+    <!-- YES -->
     <div class="panel" id="panelYes">
       <div class="center">
         <h2 class="big">YAYYYYYYY!!! 💞💞💞</h2>
@@ -252,28 +253,45 @@ button{
 </main>
 
 <script>
+/* ===== TEXT ===== */
 const INTRO_LINE = "I have been programming this for a month and I really hope you like this. I know we are long distance but I don't ever wanna let that stop me from showing how obsessed and in love I am with you. I hope it's not too cringe!!!!";
 const ASK_SUB = "No pressure… but just don't let this be the new worst day of my life 😭💕";
 
-/* ✅ your original full message */
-const YES_BODY ="Dana, I love you so much. I honestly never thought i’d ever feel this type of way towards anyone in my life. Not a single waking moment goes by without me constantly being obsessed with you (so suffocating 🙄). I acc wanna talk abt a very underrated quality that you have which i don’t mention nearly enough, which is your maturity in the way you handle yourself. Like you have so many responsibilities and commitments, but you are never the one to js constantly complain and act tired abt them . IDK how to describe it but you js have a very strong persona, which I love. You never shy away from expressing yourself or your opinions, and it’s obv very attractive but also very inspiring for many ppl, including me. Aside from this, I mean you got the usual suspects, like you’re so gorgeous (duh look in the mirror) or so funny. But the one thing I love abt you is that being w you feels so easy and freeing. I see all these other guys talk abt their women like they are a chore, which I genuinely don’t get cuz I crave for our moments together. Of the top of my head, one hangout that I will never be able to forget is the one when we went to point pleasant. The moment when we were hugging each other and looking into the ocean while the wind was blowing on us, ik it’s so cliche 😭 but that is a scene I will never ever forget in my life. At that moment, I genuinely wished that time would stop so I can cherish you for as long as I want, without anything getting between us. I know that we are not permanent l, but you genuinely taught me how to love someone with your whole being. If given a chance to alter anything in these past 2 years, I would not change a single thing cuz everything was perfect as long as I had you. All in all, this was my long way of saying I miss you and I want you to be my valentine. I know I’m not there to give you a big gift myself, but I know I can try my best from all the way here in Hamilton. I don’t have to get on a plane or drive 19 hrs to be with you, cuz you’re always with me.. in my thoughts, in my dreams and in my heart. You deserve more than I could possibly ever give you, but everything I ever have is yours. I love you so much Dana and thank you all the times we had together."
-`
+const YES_BODY = `Dana, I love you so much. I honestly never thought i’d ever feel this type of way towards anyone in my life. Not a single waking moment goes by without me constantly being obsessed with you (so suffocating 🙄). I acc wanna talk abt a very underrated quality that you have which i don’t mention nearly enough, which is your maturity in the way you handle yourself. Like you have so many responsibilities and commitments, but you are never the one to js constantly complain and act tired abt them . IDK how to describe it but you js have a very strong persona, which I love. You never shy away from expressing yourself or your opinions, and it’s obv very attractive but also very inspiring for many ppl, including me. Aside from this, I mean you got the usual suspects, like you’re so gorgeous (duh look in the mirror) or so funny. But the one thing I love abt you is that being w you feels so easy and freeing. I see all these other guys talk abt their women like they are a chore, which I genuinely don’t get cuz I crave for our moments together. Of the top of my head, one hangout that I will never be able to forget is the one when we went to point pleasant. The moment when we were hugging each other and looking into the ocean while the wind was blowing on us, ik it’s so cliche 😭 but that is a scene I will never ever forget in my life. At that moment, I genuinely wished that time would stop so I can cherish you for as long as I want, without anything getting between us. I know that we are not permanent l, but you genuinely taught me how to love someone with your whole being. If given a chance to alter anything in these past 2 years, I would not change a single thing cuz everything was perfect as long as I had you. All in all, this was my long way of saying I miss you and I want you to be my valentine. I know I’m not there to give you a big gift myself, but I know I can try my best from all the way here in Hamilton. I don’t have to get on a plane or drive 19 hrs to be with you, cuz you’re always with me.. in my thoughts, in my dreams and in my heart. You deserve more than I could possibly ever give you, but everything I ever have is yours. I love you so much Dana and thank you all the times we had together.
 
-Happy Valentine’s Day, my love. 🥺💘
-`;
+Happy Valentine’s Day, my love. 🥺💘`;
 
-introText.textContent = INTRO_LINE;
-askSub.textContent = ASK_SUB;
-loveBody.innerHTML = YES_BODY.trim().replace(/\n/g,"<br>");
+/* ===== ELEMENTS ===== */
+const introText = document.getElementById("introText");
+const askSub = document.getElementById("askSub");
+const loveBody = document.getElementById("loveBody");
 
 const panelIntro = document.getElementById("panelIntro");
 const panelAsk   = document.getElementById("panelAsk");
 const panelYes   = document.getElementById("panelYes");
 
-btnContinue.onclick = () => { panelIntro.classList.remove("active"); panelAsk.classList.add("active"); };
-btnYes.onclick      = () => { panelAsk.classList.remove("active"); panelYes.classList.add("active"); };
+const btnContinue = document.getElementById("btnContinue");
+const btnYes = document.getElementById("btnYes");
+const btnNo  = document.getElementById("btnNo");
 
-// hearts
+const arena = document.getElementById("arena");
+const noHint = document.getElementById("noHint");
+const hearts = document.getElementById("hearts");
+
+/* ===== SET TEXT (GUARANTEED) ===== */
+introText.textContent = INTRO_LINE;
+askSub.textContent = ASK_SUB;
+loveBody.innerHTML = YES_BODY.replace(/\n/g, "<br>");
+
+/* ===== PANELS ===== */
+function show(p){
+  [panelIntro, panelAsk, panelYes].forEach(x => x.classList.remove("active"));
+  p.classList.add("active");
+}
+btnContinue.addEventListener("click", () => show(panelAsk));
+btnYes.addEventListener("click", () => show(panelYes));
+
+/* ===== HEARTS ===== */
 const heartChars=["💖","💘","💝","💗","💓","💕","❤️","🫶"];
 function spawnHeart(){
   const el=document.createElement("div");
@@ -288,7 +306,7 @@ function spawnHeart(){
 }
 setInterval(spawnHeart,180);
 
-// NO button movement + message
+/* ===== NO BUTTON RUN + TEXT ===== */
 const noPhrases = [
   "You sure? 🥺",
   "Ik it was a misclick dw? ✌🏾",

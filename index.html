@@ -12,13 +12,16 @@
   --text:#fff; --muted:#ffd6e7;
   --yes:#2ee59d; --yes2:#1ccf8b;
   --no:#ff5b7a; --no2:#ff3d63;
-  --shadow: 0 18px 60px rgba(0,0,0,.45);
 }
 *{box-sizing:border-box}
+
 body{
-  margin:0; min-height:100vh; display:grid; place-items:center;
-  color:var(--text);
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  margin:0;
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  font-family: ui-sans-serif, system-ui;
+  color:white;
   background:
     radial-gradient(1200px 800px at 20% 10%, #5c003f 0%, transparent 55%),
     radial-gradient(1000px 700px at 80% 90%, #3b005c 0%, transparent 55%),
@@ -26,10 +29,12 @@ body{
   overflow:hidden;
 }
 
-/* floating hearts */
+/* hearts */
 .hearts{
-  position:fixed; inset:0; pointer-events:none; overflow:hidden;
-  opacity:.95; z-index:0;
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
 }
 .heart{
   position:absolute;
@@ -44,84 +49,120 @@ body{
 
 /* card */
 .card{
-  width:min(780px, 94vw);
+  width:min(820px, 94vw);
   max-height:92vh;
   overflow:auto;
-  padding:24px;
-  border-radius:24px;
+  padding:40px 32px;
+  border-radius:28px;
   background: linear-gradient(180deg, var(--card2), var(--card));
-  box-shadow: var(--shadow);
   border: 1px solid rgba(255,255,255,.18);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   z-index:1;
 }
 
-/* centered header */
+/* header */
 .top{
   text-align:center;
-  margin-bottom:10px;
+  margin-bottom:40px;
 }
 .badge{
-  width:44px; height:44px;
-  display:grid; place-items:center;
-  margin:0 auto 6px auto;
-  border-radius:14px;
+  width:50px;
+  height:50px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 10px auto;
+  border-radius:16px;
   background:#ff3d631f;
   border:1px solid rgba(255,255,255,.18);
-  font-size:22px;
+  font-size:24px;
 }
 h1{
   margin:0;
-  font-size:18px;
-  letter-spacing:.6px;
+  font-size:22px;
   text-transform:uppercase;
+  letter-spacing:1px;
 }
 #tinyLine{
-  margin-top:4px;
-  font-size:14px;
+  margin-top:6px;
+  font-size:16px;
   opacity:.9;
 }
 
 /* panels */
-.stage{ position:relative; min-height:420px; }
+.stage{
+  position:relative;
+  min-height:420px;
+}
 .panel{
-  position:absolute; inset:0;
-  display:grid; place-items:center;
-  opacity:0; transform:translateY(10px);
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  opacity:0;
   transition:.4s ease;
   pointer-events:none;
 }
 .panel.active{
-  opacity:1; transform:none;
+  opacity:1;
   pointer-events:auto;
 }
 
 .center{
   text-align:center;
   width:100%;
-  max-width:720px;
+  max-width:760px;
   margin:0 auto;
 }
 
-.big{ font-size:30px; margin-bottom:10px; }
-.sub{ max-width:60ch; margin:0 auto; color:var(--muted); }
+/* 🔥 BIGGER FONTS FOR INTRO + ASK */
+#panelIntro .big{
+  font-size:52px;
+  margin-bottom:20px;
+}
+#panelIntro .sub{
+  font-size:22px;
+  line-height:1.6;
+  max-width:700px;
+  margin:0 auto;
+}
 
-/* 🔥 Bigger fonts ONLY for Intro + Ask */
-.scaleIntro .big{ font-size:42px; }
-.scaleIntro .sub{ font-size:19px; }
+#panelAsk .big{
+  font-size:50px;
+  margin-bottom:20px;
+}
+#panelAsk .sub{
+  font-size:21px;
+  line-height:1.6;
+  max-width:680px;
+  margin:0 auto;
+}
 
-.scaleAsk .big{ font-size:42px; }
-.scaleAsk .sub{ font-size:19px; }
-.scaleAsk button{ font-size:18px; padding:14px 22px; }
+#panelAsk button{
+  font-size:20px;
+  padding:16px 28px;
+}
+
+/* normal size for YES screen */
+.big{
+  font-size:32px;
+}
+.sub{
+  color:var(--muted);
+}
 
 /* buttons */
-.btnrow{ margin-top:16px; display:flex; justify-content:center; gap:14px; }
+.btnrow{
+  margin-top:28px;
+  display:flex;
+  justify-content:center;
+  gap:18px;
+}
 button{
-  border:0; cursor:pointer;
-  padding:12px 18px;
-  border-radius:14px;
+  border:0;
+  cursor:pointer;
+  padding:14px 24px;
+  border-radius:16px;
   font-weight:700;
-  font-size:16px;
 }
 .yes{
   background: linear-gradient(180deg, var(--yes), var(--yes2));
@@ -134,38 +175,45 @@ button{
 .ghost{
   background:transparent;
   border:1px solid rgba(255,255,255,.3);
-  color:#fff;
+  color:white;
 }
 
 /* no arena */
 .arena{
-  margin:14px auto 0;
-  width:100%; max-width:560px;
-  height:130px;
-  border-radius:18px;
-  border:1px dashed rgba(255,255,255,.2);
-  background:rgba(255,255,255,.06);
+  margin:22px auto 0;
+  width:100%;
+  max-width:600px;
+  height:150px;
+  border-radius:22px;
+  border:1px dashed rgba(255,255,255,.25);
+  background:rgba(255,255,255,.05);
   position:relative;
 }
 .noMover{
   position:absolute;
-  left:58%; top:54%;
+  left:58%;
+  top:54%;
   transform:translate(-50%, -50%);
 }
 
-/* YES page note */
+/* YES note */
 .loveNote{
   text-align:left;
-  padding:16px;
-  border-radius:18px;
+  padding:20px;
+  border-radius:20px;
   background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.18);
-  margin-top:14px;
+  margin-top:18px;
   max-height:44vh;
   overflow:auto;
 }
-.loveNote p{ line-height:1.55; font-size:15px; }
-.sig{ margin-top:10px; font-weight:700; }
+.loveNote p{
+  line-height:1.55;
+}
+.sig{
+  margin-top:12px;
+  font-weight:700;
+}
 </style>
 </head>
 
@@ -182,8 +230,8 @@ button{
 
 <section class="stage">
 
-<!-- Intro -->
-<div class="panel active scaleIntro" id="panelIntro">
+<!-- INTRO -->
+<div class="panel active" id="panelIntro">
   <div class="center">
     <h2 class="big">Hi My Love ❤️</h2>
     <p class="sub" id="introText"></p>
@@ -193,8 +241,8 @@ button{
   </div>
 </div>
 
-<!-- Ask -->
-<div class="panel scaleAsk" id="panelAsk">
+<!-- ASK -->
+<div class="panel" id="panelAsk">
   <div class="center">
     <h2 class="big">Dana, will you be my Valentine? 💌</h2>
     <p class="sub" id="askSub"></p>
@@ -208,7 +256,7 @@ button{
   </div>
 </div>
 
-<!-- Yes -->
+<!-- YES -->
 <div class="panel" id="panelYes">
   <div class="center">
     <h2 class="big">YAYYYYYYY!!! 💞💞💞</h2>
@@ -227,25 +275,20 @@ button{
 <script>
 const INTRO_LINE = "I have been programming this for a month and I really hope you like this. I know we are long distance but I don't ever wanna let that stop me from showing how obsessed and in love I am with you. I hope it's not too cringe!!!!";
 const ASK_SUB = "No pressure… but just don't let this be the new worst day of my life 😭💕";
+const YES_BODY = "Your full long message stays here.";
 
-const YES_BODY = `Dana, I love you so much... (rest of your message stays here)`;
+// init
+introText.textContent = INTRO_LINE;
+askSub.textContent = ASK_SUB;
+loveBody.innerHTML = YES_BODY;
 
-// elements
-const panelIntro = document.getElementById("panelIntro");
-const panelAsk = document.getElementById("panelAsk");
-const panelYes = document.getElementById("panelYes");
-
-document.getElementById("introText").textContent = INTRO_LINE;
-document.getElementById("askSub").textContent = ASK_SUB;
-document.getElementById("loveBody").innerHTML = YES_BODY.replace(/\n/g,"<br>");
-
+// panel switching
 function show(p){
-  [panelIntro,panelAsk,panelYes].forEach(x=>x.classList.remove("active"));
+  document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
   p.classList.add("active");
 }
-
-document.getElementById("btnContinue").onclick=()=>show(panelAsk);
-document.getElementById("btnYes").onclick=()=>show(panelYes);
+btnContinue.onclick=()=>show(panelAsk);
+btnYes.onclick=()=>show(panelYes);
 
 // hearts
 const heartChars=["💖","💘","💝","💗","💓","💕","❤️"];
@@ -257,7 +300,7 @@ function spawnHeart(){
   el.style.bottom="-20vh";
   el.style.fontSize=(18+Math.random()*18)+"px";
   el.style.animationDuration=(3+Math.random()*3)+"s";
-  document.getElementById("hearts").appendChild(el);
+  hearts.appendChild(el);
   setTimeout(()=>el.remove(),6000);
 }
 setInterval(spawnHeart,180);
